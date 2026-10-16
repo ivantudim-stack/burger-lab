@@ -287,7 +287,10 @@ function cartPage() {
         ? el('div', { class: 'mode-switch' }, [['Самовывоз', false], ['Доставка', true]].map(([label, value]) =>
           el('button', { class: `button${state.form.delivery === value ? ' primary' : ''}`, 'aria-pressed': String(state.form.delivery === value),
             onclick: () => { state.form.delivery = value; render(); } }, label)))
-        : el('p', { text: `Самовывоз${state.business.address ? ` · ${state.business.address}` : ''}. Доставка пока недоступна.` })),
+        : el('p', { text: `Самовывоз${state.business.address ? ` · ${state.business.address}` : ''}. Доставка пока недоступна.` }),
+      delivery ? el('p', { class: 'mt-sm', text: state.form.delivery
+        ? `Доставка ${state.business.deliveryArea || ''} — ${rub(state.business.deliveryFeeRubles || 0)}.`.replace('  ', ' ')
+        : `Самовывоз${state.business.address ? `: ${state.business.address}` : ''}.` }) : null),
     el('section', { class: 'form-section' }, el('h2', { text: 'Контакты' }),
       el('div', { class: 'form-fields' },
         field('Имя', 'name', { autocomplete: 'name', maxlength: '80' }),
