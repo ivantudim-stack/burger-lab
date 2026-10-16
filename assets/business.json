@@ -1,0 +1,25 @@
+{
+    "name":  "BURGER LAB",
+    "tagline":  "TASTE IS SCIENCE",
+    "phone":  "",
+    "orderPhone":  "+79952746038",
+    "address":  "",
+    "hours":  "",
+    "deliveryFeeRubles":  null,
+    "freeDeliveryFromRubles":  null,
+    "deliveryEnabled":  false,
+    "logo":  "images/logo_dark.png",
+    "heroImage":  "images/interior.png",
+    "gallery":  [
+                    "images/interior.png",
+                    "images/counter.png",
+                    "images/neon_logo.png",
+                    "images/wall_logo.png",
+                    "images/guests_at_counter.png",
+                    "images/taste_is_science.png",
+                    "images/guests_with_order.png",
+                    "images/guests_reading_menu.png",
+                    "images/milkshake.png"
+                ],
+    "menuNote":  "Цены хот-догов уточняются."
+}
