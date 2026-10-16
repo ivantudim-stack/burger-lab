@@ -21,7 +21,7 @@ const storage = (() => { try { return window.localStorage || memoryStorage; } ca
 
 const state = {
   catalog: [], business: {}, cart: {}, orders: [], query: '', category: '',
-  form: { name: '', phone: '', address: '', comment: '', delivery: false, consent: false }, formError: '', pendingSend: null,
+  form: { name: '', phone: '', address: '', comment: '', delivery: false, payment: 'card', consent: false }, formError: '', pendingSend: null,
 };
 
 /* ---------- helpers ---------- */
@@ -291,6 +291,13 @@ function cartPage() {
       delivery ? el('p', { class: 'mt-sm', text: state.form.delivery
         ? `Доставка ${state.business.deliveryArea || ''} — ${rub(state.business.deliveryFeeRubles || 0)}.`.replace('  ', ' ')
         : `Самовывоз${state.business.address ? `: ${state.business.address}` : ''}.` }) : null),
+    el('section', { class: 'form-section' }, el('h2', { text: 'Оплата при получении' }),
+      el('div', { class: 'mode-switch' }, [['Картой', 'card'], ['Наличными', 'cash']].map(([label, value]) =>
+        el('button', { class: `button${state.form.payment === value ? ' primary' : ''}`, 'aria-pressed': String(state.form.payment === value),
+          onclick: () => { state.form.payment = value; render(); } }, label))),
+      el('p', { class: 'mt-sm', text: state.form.payment === 'cash'
+        ? 'Оплата наличными при получении заказа.'
+        : `Оплата банковской картой через терминал при получении — ${delivery && state.form.delivery ? 'курьеру' : 'на кассе'}.` })),
     el('section', { class: 'form-section' }, el('h2', { text: 'Контакты' }),
       el('div', { class: 'form-fields' },
         field('Имя', 'name', { autocomplete: 'name', maxlength: '80' }),
@@ -301,7 +308,7 @@ function cartPage() {
       el('span', { text: `Согласен(на) передать имя и телефон ресторану вместе с заявкой${phone ? ` на номер ${displayPhone(phone)}` : ''}.` })),
     state.formError ? el('div', { class: 'form-error', role: 'alert', text: state.formError }) : null,
     el('button', { class: 'button primary', onclick: submit }, icon('check'), `Оформить заявку · ${rub(sum.total)}`),
-    el('p', { class: 'footnote', text: 'Заявка сохраняется на телефоне, затем вы отправляете её ресторану по SMS или в WhatsApp. Оплата — при получении.' }))];
+    el('p', { class: 'footnote', text: 'Заявка сохраняется на телефоне, затем вы отправляете её ресторану по SMS или в WhatsApp. Оплата — при получении, в приложении деньги не списываются.' }))];
 }
 
 function submit() {
