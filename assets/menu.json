@@ -1,0 +1,599 @@
+[
+    {
+        "id":  "chicken_burger",
+        "name":  "Чикен Бургер",
+        "category":  "Бургеры",
+        "description":  "Булочка, куриная котлета, салат айсберг, майонез.",
+        "art":  "images/menu_page_1.png#124,478,275,194",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  200
+    },
+    {
+        "id":  "cheeseburger",
+        "name":  "Чизбургер",
+        "category":  "Бургеры",
+        "description":  "Булочка, куриная котлета, ломтик сыра чеддер, лук, маринованные огурчики, кетчуп, горчица.",
+        "art":  "images/menu_page_1.png#419,479,274,194",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  200
+    },
+    {
+        "id":  "chicken_deluxe",
+        "name":  "Чикен Бургер ДЕ ЛЮКС",
+        "category":  "Бургеры",
+        "description":  "Булочка, куриная котлета, томат, салат айсберг, ломтик сыра чеддер, лук, маринованные огурчики, кетчуп, горчица.",
+        "art":  "images/menu_page_1.png#711,479,275,194",
+        "badge":  "",
+        "priceRubles":  360,
+        "weightGrams":  250
+    },
+    {
+        "id":  "hamburger",
+        "name":  "Гамбургер",
+        "category":  "Бургеры",
+        "description":  "Булочка с кунжутом, котлеты из говядины, маринованные огурчики, лук, горчица, кетчуп.",
+        "art":  "images/menu_page_1.png#1003,481,269,194",
+        "badge":  "",
+        "priceRubles":  280,
+        "weightGrams":  185
+    },
+    {
+        "id":  "grand",
+        "name":  "Гранд",
+        "category":  "Бургеры",
+        "description":  "Булочка с кунжутом, котлета из говядины, два ломтика сыра чеддер, маринованные огурчики, лук, кетчуп, горчица.",
+        "art":  "images/menu_page_1.png#1286,482,268,194",
+        "badge":  "",
+        "priceRubles":  340,
+        "weightGrams":  200
+    },
+    {
+        "id":  "double_grand",
+        "name":  "Двойной Гранд",
+        "category":  "Бургеры",
+        "description":  "Булочка с кунжутом, котлеты из говядины, два ломтика сыра чеддер, маринованные огурчики, лук, кетчуп, горчица.",
+        "art":  "images/menu_page_1.png#61,848,239,178",
+        "badge":  "",
+        "priceRubles":  500,
+        "weightGrams":  300
+    },
+    {
+        "id":  "chef_burger",
+        "name":  "Шеф Бургер",
+        "category":  "Бургеры",
+        "description":  "Чёрная булочка с кунжутом, котлета из говядины, маринованные огурчики, маринованные халапеньо, лук, горчица, соус бургер, острый соус.",
+        "art":  "images/menu_page_1.png#312,849,238,177",
+        "badge":  "Острый",
+        "priceRubles":  350,
+        "weightGrams":  185
+    },
+    {
+        "id":  "black_burger",
+        "name":  "Black бургер",
+        "category":  "Бургеры",
+        "description":  "Чёрная булочка с кунжутом, котлета из говядины, сыр чеддер, бекон, огурец маринованный, лук, томат, лук фри, соус барбекю, соус чесночный.",
+        "art":  "images/menu_page_1.png#562,850,240,176",
+        "badge":  "",
+        "priceRubles":  340,
+        "weightGrams":  null
+    },
+    {
+        "id":  "gourmet_burger",
+        "name":  "Бургер Гурмэн",
+        "category":  "Бургеры",
+        "description":  "Чёрная булочка с кунжутом, котлета из говядины, моцарелла, бекон, картофель фри, лук фри, соус сырный, соус барбекю.",
+        "art":  "images/menu_page_1.png#813,850,239,177",
+        "badge":  "",
+        "priceRubles":  350,
+        "weightGrams":  null
+    },
+    {
+        "id":  "caesar_burger",
+        "name":  "Бургер Цезарь",
+        "category":  "Бургеры",
+        "description":  "Булочка, стрипсы, пармезан, салат айсберг, томат, соус цезарь, соус чесночный.",
+        "art":  "images/menu_page_1.png#1066,851,240,176",
+        "badge":  "",
+        "priceRubles":  350,
+        "weightGrams":  null
+    },
+    {
+        "id":  "shrimp_reactor",
+        "name":  "Бургер Креветко-Реактор",
+        "category":  "Бургеры",
+        "description":  "Булочка, креветки, огурец свежий, салат айсберг, помидор, салат чука, имбирь маринованный, соус спайси, соус чесночный.",
+        "art":  "images/menu_page_1.png#1320,851,238,176",
+        "badge":  "",
+        "priceRubles":  370,
+        "weightGrams":  null
+    },
+    {
+        "id":  "kids_box",
+        "name":  "Детский бокс",
+        "category":  "Детский бокс",
+        "description":  "Чикен бургер, картофель фри, сок, игрушка.",
+        "art":  "images/menu_page_2.png#425,441,840,604",
+        "badge":  "",
+        "priceRubles":  460,
+        "weightGrams":  null
+    },
+    {
+        "id":  "pizza_pepperoni",
+        "name":  "Пицца «Пепперони»",
+        "category":  "Пицца",
+        "description":  "Соус томатный, смесь сыров моцарелла и гауда, колбаски пепперони.",
+        "art":  "images/menu_page_3.png#264,364,172,212",
+        "badge":  "",
+        "priceRubles":  700,
+        "weightGrams":  null,
+        "diameterCm":  35
+    },
+    {
+        "id":  "pizza_margherita",
+        "name":  "Пицца «Маргарита»",
+        "category":  "Пицца",
+        "description":  "Соус томатный, смесь сыров моцарелла и гауда, помидор.",
+        "art":  "images/menu_page_3.png#509,364,172,212",
+        "badge":  "",
+        "priceRubles":  600,
+        "weightGrams":  null,
+        "diameterCm":  35
+    },
+    {
+        "id":  "pizza_cheese",
+        "name":  "Пицца «Сырная с бортиками моцарелла»",
+        "category":  "Пицца",
+        "description":  "Соус томатный, смесь сыров моцарелла и гауда, сыр чеддер, сыр мон блю, сыр пармезан, бортики с сыром моцарелла.",
+        "art":  "images/menu_page_3.png#753,364,172,212",
+        "badge":  "",
+        "priceRubles":  800,
+        "weightGrams":  null,
+        "diameterCm":  35
+    },
+    {
+        "id":  "pizza_shrimp_chili",
+        "name":  "Пицца «Креветка со сладким чили»",
+        "category":  "Пицца",
+        "description":  "Соус тысяча островов, смесь сыров гауда и моцарелла, креветки, ананасы, сладкий перец, соус сладкий чили.",
+        "art":  "images/menu_page_3.png#994,365,171,211",
+        "badge":  "",
+        "priceRubles":  900,
+        "weightGrams":  null,
+        "diameterCm":  35
+    },
+    {
+        "id":  "pizza_four_seasons",
+        "name":  "Пицца «Четыре сезона»",
+        "category":  "Пицца",
+        "description":  "Соус томатный, смесь сыров моцарелла и гауда, ветчина, пепперони, кубики брынзы, томаты, шампиньоны, итальянские травы.",
+        "art":  "images/menu_page_3.png#1238,365,171,211",
+        "badge":  "",
+        "priceRubles":  750,
+        "weightGrams":  null,
+        "diameterCm":  35
+    },
+    {
+        "id":  "pizza_bbq",
+        "name":  "Пицца «Барбекю»",
+        "category":  "Пицца",
+        "description":  "Соус томатный, смесь сыров моцарелла и гауда, пепперони, бекон, соус барбекю.",
+        "art":  "images/menu_page_3.png#625,769,172,209",
+        "badge":  "",
+        "priceRubles":  750,
+        "weightGrams":  null
+    },
+    {
+        "id":  "pizza_carbonara",
+        "name":  "Пицца «Карбонара»",
+        "category":  "Пицца",
+        "description":  "Соус цезарь, смесь сыров моцарелла и гауда, бекон, лук, томат, сыр пармезан.",
+        "art":  "images/menu_page_3.png#871,769,172,209",
+        "badge":  "",
+        "priceRubles":  800,
+        "weightGrams":  null
+    },
+    {
+        "id":  "fries",
+        "name":  "Картофель фри",
+        "category":  "Закуски",
+        "description":  "Картофель фри.",
+        "art":  "images/menu_page_4.png#480,145,160,169",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  150
+    },
+    {
+        "id":  "nuggets",
+        "name":  "Наггетсы",
+        "category":  "Закуски",
+        "description":  "10 штук.",
+        "art":  "images/menu_page_4.png#757,144,206,169",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  200,
+        "pieceCount":  10
+    },
+    {
+        "id":  "onion_rings",
+        "name":  "Луковые кольца",
+        "category":  "Закуски",
+        "description":  "10 штук.",
+        "art":  "images/menu_page_4.png#995,145,252,177",
+        "badge":  "",
+        "priceRubles":  200,
+        "weightGrams":  150,
+        "pieceCount":  10
+    },
+    {
+        "id":  "potato_wedges",
+        "name":  "Картофель по-деревенски",
+        "category":  "Закуски",
+        "description":  "Картофель по-деревенски.",
+        "art":  "images/menu_page_4.png#281,390,173,174",
+        "badge":  "",
+        "priceRubles":  200,
+        "weightGrams":  150
+    },
+    {
+        "id":  "strips",
+        "name":  "Стрипсы",
+        "category":  "Закуски",
+        "description":  "5 штук.",
+        "art":  "images/menu_page_4.png#548,389,212,175",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  200,
+        "pieceCount":  5
+    },
+    {
+        "id":  "cheese_sticks",
+        "name":  "Сырные палочки",
+        "category":  "Закуски",
+        "description":  "6 штук.",
+        "art":  "images/menu_page_4.png#817,389,158,175",
+        "badge":  "",
+        "priceRubles":  220,
+        "weightGrams":  130,
+        "pieceCount":  6
+    },
+    {
+        "id":  "wings",
+        "name":  "Крылышки не острые",
+        "category":  "Закуски",
+        "description":  "5 штук.",
+        "art":  "images/menu_page_4.png#1074,390,222,174",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  215,
+        "pieceCount":  5
+    },
+    {
+        "id":  "sauce_sweet_sour",
+        "name":  "Соус кисло-сладкий",
+        "category":  "Соусы",
+        "description":  "Кисло-сладкий соус.",
+        "art":  "sauce",
+        "badge":  "",
+        "priceRubles":  50,
+        "weightGrams":  null
+    },
+    {
+        "id":  "sauce_ketchup",
+        "name":  "Кетчуп",
+        "category":  "Соусы",
+        "description":  "Кетчуп.",
+        "art":  "sauce",
+        "badge":  "",
+        "priceRubles":  50,
+        "weightGrams":  null
+    },
+    {
+        "id":  "sauce_cheese",
+        "name":  "Сырный соус",
+        "category":  "Соусы",
+        "description":  "Сырный соус.",
+        "art":  "sauce",
+        "badge":  "",
+        "priceRubles":  50,
+        "weightGrams":  null
+    },
+    {
+        "id":  "sauce_garlic",
+        "name":  "Чесночный соус",
+        "category":  "Соусы",
+        "description":  "Чесночный соус.",
+        "art":  "sauce",
+        "badge":  "",
+        "priceRubles":  50,
+        "weightGrams":  null
+    },
+    {
+        "id":  "sauce_bbq",
+        "name":  "Соус барбекю",
+        "category":  "Соусы",
+        "description":  "Соус барбекю.",
+        "art":  "sauce",
+        "badge":  "",
+        "priceRubles":  50,
+        "weightGrams":  null
+    },
+    {
+        "id":  "hotdog_cheese_bacon",
+        "name":  "Чиз Хит Бекон",
+        "category":  "Хот-доги",
+        "description":  "Булочка, сосиска, бекон, сырный соус чеддер, маринованный огурец, жареный лук, BBQ соус.",
+        "art":  "images/menu_page_5.png#181,410,286,286",
+        "badge":  "",
+        "priceRubles":  null,
+        "weightGrams":  null
+    },
+    {
+        "id":  "hotdog_vegetable",
+        "name":  "Овощной Бум",
+        "category":  "Хот-доги",
+        "description":  "Булка, сосиска, кетчуп, помидор, огурец свежий, лук красный, соус медово-горчичный.",
+        "art":  "images/menu_page_5.png#575,417,292,286",
+        "badge":  "",
+        "priceRubles":  null,
+        "weightGrams":  null
+    },
+    {
+        "id":  "hotdog_fire_lab",
+        "name":  "Огненный Lab Dog",
+        "category":  "Хот-доги",
+        "description":  "Булочка, сосиска, сыр чеддер, халапеньо маринованный, красный лук, соус чили-майо, хрустящий лук.",
+        "art":  "images/menu_page_5.png#982,422,303,290",
+        "badge":  "Острый",
+        "priceRubles":  null,
+        "weightGrams":  null
+    },
+    {
+        "id":  "lemonade_mojito",
+        "name":  "Мохито",
+        "category":  "Лимонады",
+        "description":  "Лайм, мята, сахарный сироп, спрайт, лёд.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "lemonade_cranberry_gum",
+        "name":  "Клюквенная жвачка",
+        "category":  "Лимонады",
+        "description":  "Вода с газом, сироп Бабл-гам, сироп клюквенный, сок лайма.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  350,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "lemonade_blue_lagoon",
+        "name":  "Голубая лагуна",
+        "category":  "Лимонады",
+        "description":  "Спрайт, лимон, сироп Blue Kura Sou.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "lemonade_strawberry_mojito",
+        "name":  "Мохито клубничный",
+        "category":  "Лимонады",
+        "description":  "Клубника, лайм, мята, клубничный сироп, спрайт, лёд.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "lemonade_rocket_fuel",
+        "name":  "Ракетное топливо",
+        "category":  "Лимонады",
+        "description":  "Red Bull, сироп гранатовый, апельсиновый сок.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  350,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "lemonade_apple",
+        "name":  "Яблочный",
+        "category":  "Лимонады",
+        "description":  "Вода с газом, сироп персиковый, яблочный сок.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "lemonade_mango_passionfruit",
+        "name":  "Манго Маракуйя",
+        "category":  "Лимонады",
+        "description":  "Вода с газом, основа.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  350,
+        "weightGrams":  null,
+        "volumeMl":  200
+    },
+    {
+        "id":  "shake_vanilla",
+        "name":  "Ванильный",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг ванильный.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_chocolate",
+        "name":  "Шоколадный",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг шоколадный.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  250,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_bubblegum",
+        "name":  "Бабл-гам",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг банановый, сироп Бабл-гам.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_cloud",
+        "name":  "Воздушное облако",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, сироп Blue кюрасао.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_caramel",
+        "name":  "Карамельный бум",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг карамельный, взбитые сливки, украшения.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_winter_cherry",
+        "name":  "Зимняя вишня",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг вишнёвый, взбитые сливки, украшения.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_raspberry_sunset",
+        "name":  "Малиновый закат",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг малиновый, взбитые сливки, украшения.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_strawberry_explosion",
+        "name":  "Клубничный взрыв",
+        "category":  "Милкшейки",
+        "description":  "Молоко, мороженое, топпинг клубничный, взбитые сливки, украшения.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "shake_caramel_banana",
+        "name":  "Карамельный бум",
+        "category":  "Милкшейки",
+        "description":  "Банан, мороженое, топпинг карамельный, взбитые сливки, украшения.",
+        "art":  "drink",
+        "badge":  "",
+        "priceRubles":  300,
+        "weightGrams":  250
+    },
+    {
+        "id":  "tea_black",
+        "name":  "Чёрный",
+        "category":  "Чай",
+        "description":  "Чёрный чай.",
+        "art":  "tea",
+        "badge":  "",
+        "priceRubles":  40,
+        "weightGrams":  null
+    },
+    {
+        "id":  "tea_green_bergamot",
+        "name":  "Зелёный с бергамотом",
+        "category":  "Чай",
+        "description":  "Зелёный чай с бергамотом.",
+        "art":  "tea",
+        "badge":  "",
+        "priceRubles":  45,
+        "weightGrams":  null
+    },
+    {
+        "id":  "tea_fruit",
+        "name":  "Фруктовый",
+        "category":  "Чай",
+        "description":  "Фруктовый чай.",
+        "art":  "tea",
+        "badge":  "",
+        "priceRubles":  45,
+        "weightGrams":  null
+    },
+    {
+        "id":  "coffee_americano",
+        "name":  "Американо",
+        "category":  "Кофе",
+        "description":  "Американо.",
+        "art":  "coffee",
+        "badge":  "",
+        "priceRubles":  100,
+        "weightGrams":  null
+    },
+    {
+        "id":  "coffee_espresso",
+        "name":  "Эспрессо",
+        "category":  "Кофе",
+        "description":  "Эспрессо.",
+        "art":  "coffee",
+        "badge":  "",
+        "priceRubles":  80,
+        "weightGrams":  null
+    },
+    {
+        "id":  "coffee_double_espresso",
+        "name":  "Двойной эспрессо",
+        "category":  "Кофе",
+        "description":  "Двойной эспрессо.",
+        "art":  "coffee",
+        "badge":  "",
+        "priceRubles":  160,
+        "weightGrams":  null
+    },
+    {
+        "id":  "coffee_cappuccino",
+        "name":  "Капучино",
+        "category":  "Кофе",
+        "description":  "Капучино.",
+        "art":  "coffee",
+        "badge":  "",
+        "priceRubles":  180,
+        "weightGrams":  null
+    },
+    {
+        "id":  "coffee_latte",
+        "name":  "Латте",
+        "category":  "Кофе",
+        "description":  "Латте.",
+        "art":  "coffee",
+        "badge":  "",
+        "priceRubles":  220,
+        "weightGrams":  null
+    }
+]
