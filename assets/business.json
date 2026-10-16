@@ -5,9 +5,10 @@
     "orderPhone":  "+79952746038",
     "address":  "Оренбургская область, село Ташла, переулок Пионерский, дом 14",
     "hours":  "Ежедневно с 10:00 до 22:00",
-    "deliveryFeeRubles":  null,
-    "freeDeliveryFromRubles":  null,
-    "deliveryEnabled":  false,
+    "deliveryFeeRubles":  250,
+    "freeDeliveryFromRubles":  2147483647,
+    "deliveryEnabled":  true,
+    "deliveryArea":  "по селу Ташла",
     "logo":  "images/logo_dark.png",
     "heroImage":  "images/interior.png",
     "gallery":  [
