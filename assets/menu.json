@@ -324,9 +324,9 @@
         "name":  "Чиз Хит Бекон",
         "category":  "Хот-доги",
         "description":  "Булочка, сосиска, бекон, сырный соус чеддер, маринованный огурец, жареный лук, BBQ соус.",
-        "art":  "images/menu_page_5.png#181,410,286,286",
+        "art":  "images/hotdog_cheese_bacon.jpg#200,660,824,660",
         "badge":  "",
-        "priceRubles":  null,
+        "priceRubles":  300,
         "weightGrams":  null
     },
     {
@@ -334,9 +334,9 @@
         "name":  "Овощной Бум",
         "category":  "Хот-доги",
         "description":  "Булка, сосиска, кетчуп, помидор, огурец свежий, лук красный, соус медово-горчичный.",
-        "art":  "images/menu_page_5.png#575,417,292,286",
+        "art":  "images/hotdog_vegetable.jpg#400,300,1136,700",
         "badge":  "",
-        "priceRubles":  null,
+        "priceRubles":  280,
         "weightGrams":  null
     },
     {
@@ -344,9 +344,9 @@
         "name":  "Огненный Lab Dog",
         "category":  "Хот-доги",
         "description":  "Булочка, сосиска, сыр чеддер, халапеньо маринованный, красный лук, соус чили-майо, хрустящий лук.",
-        "art":  "images/menu_page_5.png#982,422,303,290",
+        "art":  "images/hotdog_fire_lab.jpg#380,300,1100,700",
         "badge":  "Острый",
-        "priceRubles":  null,
+        "priceRubles":  250,
         "weightGrams":  null
     },
     {
