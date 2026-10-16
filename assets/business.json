@@ -3,7 +3,7 @@
     "tagline":  "TASTE IS SCIENCE",
     "phone":  "",
     "orderPhone":  "+79952746038",
-    "address":  "",
+    "address":  "Оренбургская область, село Ташла, переулок Пионерский, дом 14",
     "hours":  "",
     "deliveryFeeRubles":  null,
     "freeDeliveryFromRubles":  null,
@@ -21,5 +21,5 @@
                     "images/guests_reading_menu.png",
                     "images/milkshake.png"
                 ],
-    "menuNote":  "Цены хот-догов уточняются."
+    "menuNote":  ""
 }
