@@ -2,6 +2,11 @@
 export const STORAGE_KEY = 'burger-lab-pwa-v1';
 const MAX_QUANTITY = 99;
 const MAX_ORDERS = 30;
+/** Payment happens on receipt; the app never charges a card itself. */
+export const PAYMENT_LABELS = Object.freeze({
+  card: 'банковской картой при получении (терминал)',
+  cash: 'наличными при получении',
+});
 
 const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const clean = value => typeof value === 'string' ? value.trim() : '';
@@ -132,11 +137,13 @@ export function buildOrder(catalog, cart, form, business = {}, options = {}) {
   lines.push('', `Блюда: ${totals.subtotal} ₽`);
   if (form.delivery === true) lines.push(`Доставка: ${totals.deliveryFee} ₽`);
   lines.push(`Итого: ${totals.total} ₽`);
+  const payment = form.payment === 'cash' ? 'cash' : 'card';
+  lines.push(`Оплата: ${PAYMENT_LABELS[payment]}`);
   if (clean(form.comment)) lines.push(`Комментарий: ${clean(form.comment)}`);
   lines.push('', 'Заявка сформирована на устройстве и требует отправки и подтверждения рестораном.');
   return {
     id, date, items, subtotal: totals.subtotal, deliveryFee: totals.deliveryFee,
-    total: totals.total, text: lines.join('\n'), status: 'local',
+    total: totals.total, payment, text: lines.join('\n'), status: 'local',
   };
 }
 
@@ -158,8 +165,10 @@ function normalizeOrder(order) {
     || !nonnegativeInteger(order.deliveryFee) || !positiveInteger(order.total)
     || order.total !== subtotal + order.deliveryFee) return null;
   return {
-    id: order.id, date: order.date, items, subtotal, deliveryFee: order.deliveryFee,
-    total: order.total, text: order.text, status: 'local',
+    id: order.id, date: order.date, items, subtotal, deliveryFee: order.deliveryFee, total: order.total,
+    // Requests saved before the payment choice existed have no payment field.
+    ...(Object.prototype.hasOwnProperty.call(PAYMENT_LABELS, order.payment) ?{ payment: order.payment } : {}),
+    text: order.text, status: 'local',
   };
 }
 
