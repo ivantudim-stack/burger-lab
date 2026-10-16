@@ -437,9 +437,11 @@ async function start() {
 }
 
 if ('serviceWorker' in navigator && window.isSecureContext) {
+  // The first install claims the page too; reload only when an older version was in control.
+  const hadController = Boolean(navigator.serviceWorker.controller);
   let reloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (reloaded) return;
+    if (reloaded || !hadController) return;
     reloaded = true;
     if (currentRoute() === 'cart') toast('Загружена новая версия — она откроется при следующем запуске.');
     else location.reload();
