@@ -1,5 +1,7 @@
 /** Pure cart and local-request model. No request is sent to the restaurant here. */
 export const STORAGE_KEY = 'burger-lab-pwa-v1';
+export const ORDER_SERVICE_URL = 'https://burger-lab-orders-tashla.ivan-tudim.chatgpt.site';
+export const SERVER_STATUSES = Object.freeze(['accepted', 'cooking', 'ready', 'out_for_delivery', 'completed', 'cancelled']);
 const MAX_QUANTITY = 99;
 const MAX_ORDERS = 30;
 /** Payment happens on receipt; the app never charges a card itself. */
@@ -101,8 +103,56 @@ function formatDate(value) {
   return `${part('day')}.${part('month')}.${part('year')} ${part('hour')}:${part('minute')}`;
 }
 
-function requestId() {
-  return globalThis.crypto?.randomUUID?.() || `BL-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+export function requestId(secureCrypto = globalThis.crypto) {
+  if (typeof secureCrypto?.randomUUID === 'function') return `BL-${secureCrypto.randomUUID().toUpperCase()}`;
+  if (typeof secureCrypto?.getRandomValues !== 'function') throw new Error('Не удалось создать номер заявки. Откройте приложение по защищённой ссылке HTTPS.');
+  const bytes = secureCrypto.getRandomValues(new Uint8Array(16));
+  bytes[6] = (bytes[6] & 15) | 64;
+  bytes[8] = (bytes[8] & 63) | 128;
+  const hex = [...bytes].map(byte => byte.toString(16).padStart(2, '0')).join('').toUpperCase();
+  return `BL-${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
+/** The full UUID identifies a request; this shorter number is only for display. */
+export function orderNumber(id) {
+  const value = clean(id);
+  return /^BL-[A-F0-9]{8}-(?:[A-F0-9]{4}-){3}[A-F0-9]{12}$/i.test(value)
+    ? `BL-${value.slice(3).replaceAll('-', '').slice(0, 12).toUpperCase()}` : value;
+}
+
+export function orderFulfillment(order) {
+  if (order?.fulfillment === 'delivery' || order?.fulfillment === 'pickup') return order.fulfillment;
+  if (order?.tracking?.fulfillment === 'delivery' || order?.tracking?.fulfillment === 'pickup') return order.tracking.fulfillment;
+  return /(?:^|\n)Получение: доставка(?:\n|$)/.test(order?.text || '') ? 'delivery' : 'pickup';
+}
+
+export function staffOrderLink(id, fulfillment = 'pickup') {
+  const url = new URL('/staff', ORDER_SERVICE_URL);
+  url.searchParams.set('order', id);
+  url.searchParams.set('fulfillment', fulfillment === 'delivery' ? 'delivery' : 'pickup');
+  return url.href;
+}
+
+export function orderTextForSharing(order) {
+  const link = staffOrderLink(order.id, orderFulfillment(order));
+  return order.text.includes(link) ? order.text : `${order.text}\n\nДля сотрудника: ${link}`;
+}
+
+export function validStatusTime(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(value)) return false;
+  const stamp = Date.parse(value);
+  return Number.isFinite(stamp) && new Date(stamp).toISOString().slice(0, 19) === value.slice(0, 19);
+}
+
+/** Persist only the public status schema, never staff permissions or arbitrary server fields. */
+export function normalizeTracking(value, id) {
+  if (!isObject(value) || value.id !== id || value.number !== orderNumber(id)
+    || !SERVER_STATUSES.includes(value.status) || !['pickup', 'delivery'].includes(value.fulfillment)
+    || (value.status === 'out_for_delivery' && value.fulfillment !== 'delivery')
+    || !validStatusTime(value.createdAt) || !validStatusTime(value.updatedAt)
+    || Date.parse(value.updatedAt) < Date.parse(value.createdAt) || !positiveInteger(value.revision)) return null;
+  return { id: value.id, number: value.number, status: value.status, fulfillment: value.fulfillment,
+    createdAt: value.createdAt, updatedAt: value.updatedAt, revision: value.revision };
 }
 
 /** Snapshots menu names/prices and produces text for manual sharing. */
@@ -124,7 +174,7 @@ export function buildOrder(catalog, cart, form, business = {}, options = {}) {
   const id = clean(safeOptions.id) || requestId();
   const date = formatDate(safeOptions.date);
   const lines = [
-    `${clean(safeBusiness.name) || 'BURGER LAB'} — заявка №${id}`,
+    `${clean(safeBusiness.name) || 'BURGER LAB'} — заявка №${orderNumber(id)}`,
     date,
     `Имя: ${clean(form.name)}`,
     `Телефон: ${normalizePhone(form.phone)}`,
@@ -141,9 +191,11 @@ export function buildOrder(catalog, cart, form, business = {}, options = {}) {
   lines.push(`Оплата: ${PAYMENT_LABELS[payment]}`);
   if (clean(form.comment)) lines.push(`Комментарий: ${clean(form.comment)}`);
   lines.push('', 'Заявка сформирована на устройстве и требует отправки и подтверждения рестораном.');
+  const fulfillment = form.delivery === true ? 'delivery' : 'pickup';
+  lines.push('', `Для сотрудника: ${staffOrderLink(id, fulfillment)}`);
   return {
     id, date, items, subtotal: totals.subtotal, deliveryFee: totals.deliveryFee,
-    total: totals.total, payment, text: lines.join('\n'), status: 'local',
+    total: totals.total, payment, fulfillment, text: lines.join('\n'), status: 'local',
   };
 }
 
@@ -164,11 +216,15 @@ function normalizeOrder(order) {
   if (!positiveInteger(subtotal) || subtotal !== order.subtotal
     || !nonnegativeInteger(order.deliveryFee) || !positiveInteger(order.total)
     || order.total !== subtotal + order.deliveryFee) return null;
+  const tracking = normalizeTracking(order.tracking, order.id);
   return {
     id: order.id, date: order.date, items, subtotal, deliveryFee: order.deliveryFee, total: order.total,
     // Requests saved before the payment choice existed have no payment field.
     ...(Object.prototype.hasOwnProperty.call(PAYMENT_LABELS, order.payment) ?{ payment: order.payment } : {}),
     text: order.text, status: 'local',
+    ...(['pickup', 'delivery'].includes(order.fulfillment) ? { fulfillment: order.fulfillment } : {}),
+    ...(tracking && (!order.fulfillment || tracking.fulfillment === order.fulfillment) ? { tracking } : {}),
+    ...(validStatusTime(order.statusCheckedAt) ? { statusCheckedAt: order.statusCheckedAt } : {}),
   };
 }
 
