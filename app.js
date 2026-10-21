@@ -1,5 +1,6 @@
 /* BURGER LAB for iPhone (PWA): menu, cart, local requests sent by SMS / WhatsApp to the restaurant number. */
-import { addToCart, buildOrder, cartTotals, loadState, normalizePhone, saveState } from './model.js';
+import { addToCart, buildOrder, cartTotals, loadState, normalizePhone, orderNumber, orderTextForSharing, saveState } from './model.js';
+import { READY_BOARD_URL, mergeStatusResults, statusLabel, syncOrderStatuses } from './order-status.js';
 
 const main = document.getElementById('main');
 const sheet = document.getElementById('sheet');
@@ -23,6 +24,7 @@ const state = {
   catalog: [], business: {}, cart: {}, orders: [], query: '', category: '',
   form: { name: '', phone: '', address: '', comment: '', delivery: false, payment: 'card', consent: false }, formError: '', pendingSend: null,
 };
+const orderSync = { timer: null, controller: null, run: 0, busy: false, errors: new Set() };
 
 /* ---------- helpers ---------- */
 function el(tag, attrs = {}, ...children) {
@@ -154,26 +156,27 @@ function smsLink(phone, text) {
 
 function showSend(order) {
   const phone = orderPhone();
+  const text = orderTextForSharing(order);
   const copy = el('textarea', { class: 'order-copy', readonly: true, 'aria-label': 'Текст заявки' });
-  copy.value = order.text;
+  copy.value = text;
   const actions = [];
   if (phone) {
     actions.push(
-      el('a', { class: 'button primary', href: smsLink(phone, order.text) }, icon('share'), 'Отправить по SMS'),
-      el('a', { class: 'button', href: `https://wa.me/${phone.slice(1)}?text=${encodeURIComponent(order.text)}`, target: '_blank', rel: 'noopener' },
+      el('a', { class: 'button primary', href: smsLink(phone, text) }, icon('share'), 'Отправить по SMS'),
+      el('a', { class: 'button', href: `https://wa.me/${phone.slice(1)}?text=${encodeURIComponent(text)}`, target: '_blank', rel: 'noopener' },
         icon('share'), 'Отправить в WhatsApp'));
   }
   if (navigator.share) {
     actions.push(el('button', { class: 'button', onclick: async () => {
-      try { await navigator.share({ title: `Заявка ${state.business.name || 'BURGER LAB'}`, text: order.text }); }
+      try { await navigator.share({ title: `Заявка ${state.business.name || 'BURGER LAB'}`, text }); }
       catch (error) { if (error?.name !== 'AbortError') toast('Не удалось открыть «Поделиться». Скопируйте текст.'); }
     } }, icon('share'), phone ? 'Другое приложение…' : 'Отправить заявку…'));
   }
   actions.push(el('button', { class: 'button ghost', onclick: async () => {
-    try { await navigator.clipboard.writeText(order.text); toast('Текст заявки скопирован.'); }
+    try { await navigator.clipboard.writeText(text); toast('Текст заявки скопирован.'); }
     catch { copy.focus(); copy.select(); toast('Выделите текст и скопируйте вручную.'); }
   } }, 'Скопировать текст'));
-  openSheet(`Заявка № ${order.id}`,
+  openSheet(`Заявка № ${orderNumber(order.id)}`,
     el('p', { text: phone
       ? `Отправьте заявку ресторану на номер ${displayPhone(phone)}. Заказ принят только после подтверждения сотрудником.`
       : 'Отправьте заявку ресторану через удобное приложение. Заказ принят только после подтверждения сотрудником.' }),
@@ -320,9 +323,8 @@ function cartPage() {
 
 function submit() {
   try {
-    const stamp = Date.now().toString(36).toUpperCase().slice(-6);
     const order = buildOrder(state.catalog, state.cart, { ...state.form, delivery: state.form.delivery && deliveryEnabled() },
-      state.business, { id: `BL-${stamp}` });
+      state.business);
     state.orders = [order, ...state.orders].slice(0, 30);
     state.cart = {};
     state.formError = '';
@@ -339,30 +341,112 @@ function submit() {
   }
 }
 
+const statusDate = value => new Intl.DateTimeFormat('ru-RU', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value));
+const boardButton = () => el('a', { class: 'button ready-board-link', href: READY_BOARD_URL, target: '_blank', rel: 'noopener noreferrer' }, icon('check'), 'Табло готовности заказов');
+
+function orderStatusView(order) {
+  const tracking = order.tracking;
+  const offline = navigator.onLine === false;
+  const failed = orderSync.errors.has(order.id);
+  const stale = !order.statusCheckedAt || Date.now() - Date.parse(order.statusCheckedAt) > 60000;
+  const note = tracking
+    ? `Последний статус ресторана: ${statusDate(tracking.updatedAt)}.`
+    : 'Подтверждения от сотрудника пока нет. Отправьте заявку ресторану и дождитесь ответа.';
+  const warning = offline ? 'Нет сети. Показаны последние сохранённые данные.'
+    : failed ? 'Не удалось проверить статус. Последние полученные данные сохранены.'
+    : stale && tracking ? 'Данные ещё не обновлены. Проверьте статус.' : '';
+  return el('div', { class: `order-tracking${tracking?.status === 'ready' ? ' is-ready' : ''}${tracking?.status === 'cancelled' ? ' is-cancelled' : ''}` },
+    el('span', { class: `order-status${tracking ? ' confirmed' : ''}` }, tracking?.status === 'ready' ? icon('check') : null, statusLabel(tracking)),
+    el('p', { class: 'status-note', text: note }),
+    order.statusCheckedAt ? el('p', { class: 'status-note', text: `Проверено: ${statusDate(order.statusCheckedAt)}.` }) : null,
+    warning ? el('p', { class: 'status-warning', text: warning }) : null);
+}
+
 function ordersPage() {
   if (!state.orders.length) {
     return [el('div', { class: 'empty' }, icon('orders'), el('h2', { text: 'Заявок пока нет' }),
       el('p', { text: 'Оформленные заявки сохраняются здесь: их можно отправить ещё раз или повторить.' }),
-      el('a', { class: 'button primary', href: '#menu' }, 'Выбрать блюда'))];
+      el('a', { class: 'button primary', href: '#menu' }, 'Выбрать блюда'), boardButton())];
   }
   return [el('div', { class: 'orders-wrap' },
     el('h1', { text: 'Заявки' }),
+    el('p', { text: 'Статусы обновляет сотрудник после получения заявки. Отправка через SMS или WhatsApp требует подтверждения рестораном.' }),
+    el('div', { class: 'status-toolbar' },
+      el('button', { class: 'button primary', disabled: orderSync.busy || navigator.onLine === false, onclick: () => refreshOrderStatuses() },
+        orderSync.busy ? 'Проверяем статусы…' : 'Обновить статусы'), boardButton()),
+    el('p', { class: 'status-sync-note', role: 'status', text: navigator.onLine === false
+      ? 'Нет сети. Последние статусы доступны на этом телефоне.'
+      : orderSync.busy ? 'Получаем статусы от ресторана…' : 'Проверяем статусы каждые 30 секунд, пока открыта эта страница.' }),
     el('div', { class: 'stack' }, state.orders.map(order => el('article', { class: 'order-card' },
-      el('h2', { text: `№ ${order.id}` }),
+      el('h2', { text: `№ ${order.tracking?.number || orderNumber(order.id)}` }),
       el('div', { class: 'order-meta', text: order.date }),
-      el('span', { class: 'order-status', text: 'СОХРАНЕНА НА ТЕЛЕФОНЕ · ЖДЁТ ПОДТВЕРЖДЕНИЯ' }),
+      orderStatusView(order),
       el('p', { class: 'order-items' }, order.items.map((item, index) => [index ? el('br') : null, `${item.name} × ${item.quantity}`])),
       el('div', { class: 'total-line grand' }, el('span', { text: 'Итого' }), el('strong', { text: rub(order.total) })),
       el('div', { class: 'stack mt-sm' },
         el('button', { class: 'button primary', onclick: () => showSend(order) }, icon('share'), 'Отправить ресторану'),
         el('button', { class: 'button', onclick: () => repeat(order) }, 'Повторить заказ'))))),
     el('button', { class: 'button ghost danger mt', onclick: () => {
-      if (confirm('Удалить историю заявок с этого телефона? Имена и телефоны в заявках тоже будут удалены.')) {
+      if (confirm('Удалить историю с этого телефона? Это не отменяет заказы в ресторане. Имена и телефоны в местной истории тоже будут удалены.')) {
+        stopOrderPolling();
         state.orders = [];
+        orderSync.errors.clear();
         persist();
         render();
       }
     } }, 'Удалить историю'))];
+}
+
+function statusPollingAvailable() {
+  return currentRoute() === 'orders' && document.visibilityState === 'visible' && navigator.onLine !== false && state.orders.length > 0;
+}
+
+function stopOrderPolling() {
+  clearInterval(orderSync.timer);
+  orderSync.timer = null;
+  orderSync.controller?.abort();
+  orderSync.controller = null;
+  orderSync.run += 1;
+  orderSync.busy = false;
+}
+
+function refreshHistoryView() {
+  // A network reply must never redraw the checkout form or dismiss the send sheet.
+  if (currentRoute() === 'orders' && document.visibilityState === 'visible') render();
+}
+
+async function refreshOrderStatuses() {
+  if (!statusPollingAvailable() || orderSync.busy) return;
+  const snapshot = state.orders.map(order => ({ id: order.id }));
+  const controller = new AbortController();
+  const run = ++orderSync.run;
+  orderSync.controller = controller;
+  orderSync.busy = true;
+  refreshHistoryView();
+  try {
+    const results = await syncOrderStatuses(snapshot, { signal: controller.signal });
+    if (controller.signal.aborted || run !== orderSync.run) return;
+    orderSync.errors = new Set(results.filter(result => result.error
+      || (result.tracking === null && state.orders.find(order => order.id === result.id)?.tracking)).map(result => result.id));
+    state.orders = mergeStatusResults(state.orders, snapshot.map(order => order.id), results);
+    persist();
+  } finally {
+    if (run === orderSync.run) {
+      orderSync.busy = false;
+      orderSync.controller = null;
+      refreshHistoryView();
+    }
+  }
+}
+
+function updateOrderPolling(immediate = true) {
+  if (!statusPollingAvailable()) {
+    stopOrderPolling();
+    refreshHistoryView();
+    return;
+  }
+  if (!orderSync.timer) orderSync.timer = setInterval(() => refreshOrderStatuses(), 30000);
+  if (immediate) void refreshOrderStatuses();
 }
 
 function repeat(order) {
@@ -420,6 +504,7 @@ window.addEventListener('hashchange', () => {
     showSend(state.pendingSend);
     state.pendingSend = null;
   }
+  updateOrderPolling();
 });
 document.getElementById('brand-button').addEventListener('click', () => { location.hash = '#about'; });
 document.addEventListener('focusin', event => {
@@ -433,6 +518,9 @@ function connectivity() {
 }
 window.addEventListener('online', connectivity);
 window.addEventListener('offline', connectivity);
+window.addEventListener('online', () => updateOrderPolling());
+window.addEventListener('offline', () => updateOrderPolling(false));
+document.addEventListener('visibilitychange', () => updateOrderPolling());
 
 async function start() {
   try {
@@ -446,6 +534,7 @@ async function start() {
     Object.assign(state, loadState(storage, state.catalog));
     connectivity();
     render();
+    updateOrderPolling();
   } catch {
     main.replaceChildren(el('div', { class: 'empty' }, el('h2', { text: 'Меню не загрузилось' }),
       el('p', { text: 'Проверьте интернет и откройте приложение ещё раз.' }),
