@@ -117,7 +117,7 @@ function openSheet(title, ...content) {
   sheetContent.replaceChildren(
     el('div', { class: 'sheet-header' }, el('h2', { id: 'sheet-title', text: title }),
       el('button', { class: 'close-sheet', 'aria-label': 'Закрыть', onclick: () => sheet.close() }, icon('close'))),
-    ...content);
+    ...content.filter(child => child !== null && child !== undefined && child !== false));
   if (!sheet.open) sheet.showModal();
 }
 sheet.addEventListener('click', event => { if (event.target === sheet) sheet.close(); });
