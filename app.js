@@ -97,6 +97,13 @@ function art(item, className) {
     const height = Math.max(1, Math.round(canvas.clientHeight * ratio));
     canvas.width = width;
     canvas.height = height;
+    if (className === 'detail-art') {
+      const scale = Math.min(width / w, height / h);
+      const drawWidth = w * scale, drawHeight = h * scale;
+      canvas.getContext('2d').drawImage(image, x, y, w, h,
+        (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
+      return;
+    }
     // Cover the box without distortion: centre-crop the menu rectangle to the box aspect.
     let sw = w, sh = h;
     if (w / h > width / height) sw = h * width / height; else sh = w * height / width;
