@@ -1,0 +1,11 @@
+.doc{max-width:720px}
+.doc .eyebrow{display:block;margin-top:40px}
+.doc h1{font-size:44px;letter-spacing:-2px;margin:14px 0 10px}
+.doc .meta{color:#92979e;font-size:13px;line-height:1.6;margin:0 0 18px}
+.doc h2{font-size:18px;margin:30px 0 10px;color:#ffad65}
+.doc p,.doc li{color:#c9cbcd;font-size:15px;line-height:1.7}
+.doc p{margin:0 0 10px}
+.doc ul{margin:0 0 10px;padding-left:22px}
+.doc strong{color:#f4f4ef}
+.doc a{color:#ffad65}
+@media(max-width:600px){.doc h1{font-size:34px;letter-spacing:-1.4px}.doc p,.doc li{font-size:14px}}
