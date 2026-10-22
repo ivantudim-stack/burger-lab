@@ -18,7 +18,7 @@
 
 ## Установка на Android
 
-Скачайте [клиентское приложение Android 1.3 (APK)](https://github.com/ivantudim-stack/burger-lab/releases/download/android-client-v1.3/BURGER-LAB-Client.apk). Нужен Android 8.0 или новее. Также можно открыть веб-приложение в **Chrome** → меню «⋮» → **«Добавить на главный экран»** (или «Установить приложение»).
+Скачайте [клиентское приложение Android 1.4 (APK)](https://github.com/ivantudim-stack/burger-lab/releases/download/android-client-v1.4/BURGER-LAB-Client.apk). Нужен Android 8.0 или новее. Также можно открыть веб-приложение в **Chrome** → меню «⋮» → **«Добавить на главный экран»** (или «Установить приложение»).
 
 ## Как сделать заказ
 
