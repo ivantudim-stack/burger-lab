@@ -2,6 +2,10 @@
 
 **Открыть приложение:** https://ivantudim-stack.github.io/burger-lab/
 
+**Android и iPhone — одна ссылка:** https://ivantudim-stack.github.io/burger-lab/install.html
+
+Страница предлагает скачать клиентский APK для Android или открыть веб-приложение на iPhone. [Скачать общий QR-код](https://github.com/ivantudim-stack/burger-lab/releases/download/android-client-v1.3/BURGER-LAB-Client-QR.png).
+
 Меню BURGER LAB с фото, корзина и оформление заявки. Готовая заявка отправляется ресторану по SMS или в WhatsApp на номер **+7 (995) 274-60-38**. Заказ принят после подтверждения сотрудником; оплата при получении — банковской картой (терминал) или наличными.
 
 ## Установка на iPhone
@@ -14,7 +18,7 @@
 
 ## Установка на Android
 
-Откройте ссылку в **Chrome** → меню «⋮» → **«Добавить на главный экран»** (или «Установить приложение»). Также есть отдельное Android-приложение (APK).
+Скачайте [клиентское приложение Android 1.3 (APK)](https://github.com/ivantudim-stack/burger-lab/releases/download/android-client-v1.3/BURGER-LAB-Client.apk). Нужен Android 8.0 или новее. Также можно открыть веб-приложение в **Chrome** → меню «⋮» → **«Добавить на главный экран»** (или «Установить приложение»).
 
 ## Как сделать заказ
 
