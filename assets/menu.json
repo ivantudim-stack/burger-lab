@@ -561,7 +561,7 @@
         "name":  "Эспрессо",
         "category":  "Кофе",
         "description":  "Эспрессо.",
-        "art":  "coffee",
+        "art":  "images/coffee_espresso.png#0,0,283,275",
         "badge":  "",
         "priceRubles":  80,
         "weightGrams":  null
@@ -571,7 +571,7 @@
         "name":  "Двойной эспрессо",
         "category":  "Кофе",
         "description":  "Двойной эспрессо.",
-        "art":  "coffee",
+        "art":  "images/coffee_espresso.png#0,0,283,275",
         "badge":  "",
         "priceRubles":  160,
         "weightGrams":  null
