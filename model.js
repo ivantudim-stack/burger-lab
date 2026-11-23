@@ -1,6 +1,6 @@
 /** Pure cart and local-request model. No request is sent to the restaurant here. */
 export const STORAGE_KEY = 'burger-lab-pwa-v1';
-export const ORDER_SERVICE_URL = 'https://burger-lab-orders-tashla.ivan-tudim.chatgpt.site';
+export const ORDER_SERVICE_URL = 'https://d5d56d3vq5icq0n4m6m8.lievo6ut.apigw.yandexcloud.net';
 export const SERVER_STATUSES = Object.freeze(['accepted', 'cooking', 'ready', 'out_for_delivery', 'completed', 'cancelled']);
 const MAX_QUANTITY = 99;
 const MAX_ORDERS = 30;
