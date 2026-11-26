@@ -142,17 +142,6 @@
         "diameterCm":  35
     },
     {
-        "id":  "pizza_cheese",
-        "name":  "Пицца «Сырная с бортиками моцарелла»",
-        "category":  "Пицца",
-        "description":  "Соус томатный, смесь сыров моцарелла и гауда, сыр чеддер, сыр мон блю, сыр пармезан, бортики с сыром моцарелла.",
-        "art":  "images/menu_page_3.png#753,364,172,212",
-        "badge":  "",
-        "priceRubles":  800,
-        "weightGrams":  null,
-        "diameterCm":  35
-    },
-    {
         "id":  "pizza_shrimp_chili",
         "name":  "Пицца «Креветка со сладким чили»",
         "category":  "Пицца",
